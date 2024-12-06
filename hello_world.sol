@@ -1,0 +1,1 @@
+// This solidity file is a simple hello world smart contract
