@@ -19,5 +19,13 @@ contract StorageContract{
 
     // If we want to have an object of Person data type given as an input by the user, we can have a seperate function for that. 
     // Steps: 1. Define a dynamic array to store the new entries
-    
+    // Static Array of length 3
+    // Person[3] public listOfPeople;
+    // Dynamic Array 
+    Person[] public listOfPeople;
+
+    // 2. Define a function to add the new persons of type Person to the dynamic array
+    function addPerson(uint256 _favourite_number, string memory _name) public{
+        listOfPeople.push(Person({favourite_num: _favourite_number, name: _name}));
+    }
 }
