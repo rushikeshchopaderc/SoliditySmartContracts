@@ -5,6 +5,8 @@ pragma solidity ^0.8.26;
 // 2. When a function is declared, it has 2 visibility options, external and internal (limited only to functions and not variables.) - 
 // - External means only extenal contact can access the function.
 // - Internal means only the current contract and the child contracts can access it( child contracts come fron class inheritance).
+// - Public means function can br called from outside as well as inside of the contract.
+// - Private means a function can only be called from inside the contract.
 // 3. There are 4 Mutability options of a function: pure, view, nonpayable and payable (No gas is required to execute view or pure functions as they do not modify the variables.)
 // - pure: could not read or update the state variables of the contract
 // - view: can read from the state variable but can not update the values of the state variables.
