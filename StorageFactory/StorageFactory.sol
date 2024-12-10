@@ -17,6 +17,7 @@ contract StorageFactory{
         listOfSimpleStorageContracts.push(simpleStorageContractVariable);
     }
     function sfAddPerson(uint256 _listIndex, string memory _name, uint256 _favourite_number) public{ 
+        // To interact with the smart contract you need the smart contract address and the ABI- ABIs are all the buttons that the contract shows.
         // Takes the index of the dynamic array formed above and returns the value of favourite number to name and returns it to the caller.
         listOfSimpleStorageContracts[_listIndex].addPerson(_name, _favourite_number);
     }
