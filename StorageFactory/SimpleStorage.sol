@@ -11,11 +11,12 @@ contract SimpleStorage{
     Person[] public listOfPeople;
 
     // defining a mapping
-    mapping(string=>uint256) public nameToFavouriteNumber;
+    mapping(string=>uint256) public nameToFavouriteNumber; // Used to fetch favourite number from name using mapping(dictionary)
 
-    function addPerson( string memory _name, uint256 _favourite_number) public returns(uint256) {
+    function addPerson( string memory _name, uint256 _favourite_number) public returns(string memory,uint256) {
         listOfPeople.push(Person(_favourite_number, _name));
-        return nameToFavouriteNumber[_name] = _favourite_number;
+        nameToFavouriteNumber[_name] = _favourite_number;
+        return (_name,_favourite_number);
     }
 }
 
