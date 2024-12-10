@@ -7,7 +7,6 @@ Chainlink Faucet (Sepolia): https://faucets.chain.link/sepolia
 No need for 0.001 ETH on mainnet
 ZKsync Faucets (ZKsync Sepolia): https://docs.zksync.io/build/tooling/network-faucets.html
 ZKsync Bridge: https://portal.zksync.io/bridge/
-
 */
 
 // By default there is some sepolia testnet Eth available, if not you can refer the abouve documentation to get some.
