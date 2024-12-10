@@ -2,7 +2,7 @@
 pragma solidity ^0.8.18; // This solidity version syntax latest is 0.8.28
 // pragma solidity >=0.8.0 <0.9.0;  // syntax for solidity version between the specified range
 
-contract SimpleStorage{ // The contract keyword is similar to the class keyword in Java/Python
+contract VariablesTypes{ // The contract keyword is similar to the class keyword in Java/Python
     uint256 int_var=12;     // uint256 and unit are same in solidity, if not assigned any value it take default value of 0
     bool bool_var=true;     // takes default value of false
     address addr_var=0x86223a111043E7bF07807EC4fD7eA968Ce589A5d;
