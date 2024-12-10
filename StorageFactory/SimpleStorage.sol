@@ -17,5 +17,8 @@ contract SimpleStorage{
         listOfPeople.push(Person(_favourite_number, _name));
         return nameToFavouriteNumber[_name] = _favourite_number;
     }
-
 }
+
+contract SimpleStorage2{}
+contract SimpleStorage3{}
+contract SimpleStorage4{}

@@ -20,7 +20,7 @@ contract FuncTypes{
         string name;
     }
     
-    Person[] public listOfPeople;
+    Person[] public listOfPeople; // A dynamic array of datatype Person having public visibility named listOfPeople
 
     function addPerson(uint256 _myFav_number, string memory _name) public {
         // memory or calldata needs to be defined with arrays, structs and mappings. Strings are arrays of characters. So needs to be defined
