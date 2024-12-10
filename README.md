@@ -4,7 +4,7 @@ Development and deployment of Solidity smart contracts.
 Transactions have the following fields:
 1) Nonce: Transaction count for the account.
 2) Gas Price: Price per unit of Gas.
-3) Gas Value: max gas that this transaction can use.
+3) Gas Limit: max gas that this transaction can use.
 4) To: Address to which the transaction is being sent.
 5) Value: Amount of wei to send
 6) Data: What to send to the TO address.
