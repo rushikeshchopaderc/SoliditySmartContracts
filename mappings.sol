@@ -5,7 +5,7 @@ pragma solidity ^0.8.26;
 
 contract BalanceTracker{
     
-    mapping(address=>uint256) public addressToBalance; // Defining a mapping
+    mapping(address=>uint256) public addressToBalance; // Defining a mapping. This does not require a square bracket to state that it is a dynamic mapping.
     struct Person {         //defining a struct datatype
         address myAddress;
         uint256 myBalance;

@@ -10,6 +10,11 @@ Transactions have the following fields:
 6) Data: What to send to the TO address.
 7) v, r, s: elliptical coordinates to hash a signature. Components of a transaction signature.
 
+SafeMath library was used prior to solidity version 0.8. but now doesn't. 
+Main Keywords: contract{}, library{}. Inside contract, you can have 'function{}', 'modifier{}' and 'constructor{}'
+Libraries are like contacts only with no state variable defined. They maintain reusable functions.
+Modifiers can be used to add any functionality inside a function. For example if we want to avoid writing the pieces of code again and again in the contract, we use modifiers
+
 Main differences between solidity and vyper syntax are:
 - Solidity is a curly bracket language, while vyper is a pythonic indentation sensitive language.
 - The contract in solidity starts with the keyword 'contract' but in vyper it is '__init__()' constructor handles the contract initiation.
@@ -22,4 +27,6 @@ Main differences between solidity and vyper syntax are:
 - A Solidity struct is defined like Person public pat= Person({favourite_num:7, name: 'Pat'}). A vyper struct is defined like pat: public(Person) = (7, 'Pat')
 - Global variables in solidity are same as that of environment variable in vyper and have same names, msg.sender, msg.value, block.number, tx.origin, tx.gasprice, msg.data etc.
 - For conditional operations, solidity provides a 'require' method whereas vyper provides assert statements.
+- Interfaces automatically generate the ABI of the contract in solidity as well as vyper.
+- Constructors in Solidity are declared with 'construstor{}' keyword wherease in vyper they are defined using "__init__()" keyword.
 
