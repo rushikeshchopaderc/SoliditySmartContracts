@@ -11,14 +11,14 @@ Transactions have the following fields:
 7) v, r, s: elliptical coordinates to hash a signature. Components of a transaction signature.
 
 SafeMath library was used prior to solidity version 0.8. but now doesn't. 
-Main Keywords: contract{}, library{}. Inside contract, you can have 'function{}', 'modifier{}' and 'constructor{}'
+Main Keywords: contract{}, library{}. Inside contract, you can have 'function{}', 'modifier{}', 'fallback()', 'receive()' and 'constructor{}'
 Libraries are like contacts only with no state variable defined. They maintain reusable functions.
 Modifiers can be used to add any functionality inside a function. For example if we want to avoid writing the pieces of code again and again in the contract, we use modifiers
 
 Main differences between solidity and vyper syntax are:
 - Solidity is a curly bracket language, while vyper is a pythonic indentation sensitive language.
-- The contract in solidity starts with the keyword 'contract' but in vyper it is '__init__()' constructor handles the contract initiation.
-- In solidity functions are called inside the contract keyword but in vyper, different 'def' are called for different actions independently.
+- The Constructors in solidity starts with the keyword 'constructor{}' but in vyper it is '__init__()' constructor handles the contract initiation. 
+- In solidity functions are called inside the contract keyword using 'function{}' but in vyper, different 'def' are called for different actions independently.
 - In solidity, the fuctions visiblility and mutability are mentioned in the same line after the function name, but in vyper, it is mentioned in the seperate lines above with @ character at the beginning.
 - In solidity, the function return value is stated by the 'returns' keyword followed by the type of return value in the same line of defining the contract, but in vyper, -> this arrow represents the return value. No need to type the returns keyword. 
 - The variables are difined like "uint256 public favourite_number" in solidity. Variables are defined like "num : public(uint256)" in vyper.
@@ -28,5 +28,5 @@ Main differences between solidity and vyper syntax are:
 - Global variables in solidity are same as that of environment variable in vyper and have same names, msg.sender, msg.value, block.number, tx.origin, tx.gasprice, msg.data etc.
 - For conditional operations, solidity provides a 'require' method whereas vyper provides assert statements.
 - Interfaces automatically generate the ABI of the contract in solidity as well as vyper.
-- Constructors in Solidity are declared with 'construstor{}' keyword wherease in vyper they are defined using "__init__()" keyword.
+- In solidity 1. receive()- Doesn't take any function as input and 2. fallback()- If given a function as input which doesn't exist, then reverts. are two functions that can be used to do the low level interactions. these are gas efficient, doesn't require the function keyword. This is useful if someone is given the contract address and he is paying from metamask send button directly instrad of calling the fund() function from the contract.
 

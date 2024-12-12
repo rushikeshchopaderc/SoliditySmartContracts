@@ -5,23 +5,35 @@ pragma solidity ^0.8.26;
 1) Get the funds from the users. 
 2) Set a minimum limit in USD to get the funds. (using require statement)
 3) Withdraw the funds using master wallet. (wallet which designed the contract)
+
+- In solidity, the low level interactions are done taking msg.data to reference. if msg.data is empty, receive is called, otherwise fallback is called.
+This is useful if someone is given the contract address and he is paying from metamask send button directly instrad of calling the fund() function from the contract.
+1. receive()- Doesn't take any function as input and 
+2. fallback()- If given a function as input which doesn't exist, then reverts. 
+are two functions that can be used to do the low level interactions. these are gas efficient, doesn't require the function keyword,
+
+Using Constant keyword and immutable keyword to make the contract gas efficient. The immutable keyword allows values to be set at runtime, while the constant keyword requires values to be set at compile time.
 */
 
 import {AggregatorV3Interface} from "@chainlink/contracts@1.2.0/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
 
+error notOwner();
+
 contract FundMe{
-    uint256 public minPriceUSD= 5e18; // Getting 5 USD as minimum donation.
+    uint256 public constant MINPRICEUSD= 5e18; // Getting 5 USD as minimum donation. Using constant keyword to save gas
     address[] public funders; //Creating a list of funders
     mapping(address funder=>uint256 amountFunded) public funderToAmountMapping;// Get the mappkn of the sender to the amount sent.
-    address public owner;
+    address public immutable i_owner; 
+    // Using immutable keyword to save gas. Variable that we set only one time but do not declare it in the same line, we set them as immutable. 
+    // E.g. the i_owner is set only once similar to MINPRICEUSD but has been declared in the constructor. So immutable keyword is used.
 
     // A constructor works the same way as that of __init__() in vyper/python. This is called only once and stores the variables.
     constructor(){
-        owner=msg.sender; // Setting the owner to the msg.sender so that only the owner of this contract should be able to withdraw the funds.
+        i_owner=msg.sender; // Setting the owner to the msg.sender so that only the owner of this contract should be able to withdraw the funds.
     }
 
     function fund() public payable { // Get funds and set minimum gas limits in USD
-        require(getConversionRate(msg.value)>=minPriceUSD, "Can't Send less than 1 Gwei");
+        require(getConversionRate(msg.value)>=MINPRICEUSD, "Can't Send less than 1 Gwei");
         // To get the real-time price we can't make a http://api-call api call as smart contract does not understand the stuff outside the blockchain.
         // Hence data oracles like chainlink are used to deliver the real-time price data of ethereum. It interacts between the offchain and onchain data.
         funders.push(msg.sender); //Another global/environment variable;
@@ -47,7 +59,7 @@ contract FundMe{
         return amountUSD;
     }
     function withdraw() public onlyOwner{
-        // require(msg.sender==owner, " You are not the owner. Hence you can't withdraw the funds");
+        // require(msg.sender==i_owner, " You are not the owner. Hence you can't withdraw the funds");
         // You can use the above line or you can use a modifier to do the same thing in case you want to avoid doing the same thing again and again.
         for (uint256 funderIndex=0; funderIndex<funders.length; funderIndex++){
             address funder = funders[funderIndex];
@@ -70,8 +82,18 @@ contract FundMe{
     }
 
     modifier onlyOwner{
-        require (msg.sender==owner, " You are not the owner. Hence you can't withdraw the funds");
+        // require (msg.sender==i_owner, " You are not the owner. Hence you can't withdraw the funds");
+        if(msg.sender!= i_onwer){ revert notOwner();} // This saves more gas as compared to the above require statement
         _; // This line tells the calling function to go and execute the next lines of code.
+    }
+
+    // If someone sends ether without any function/calling incorrect function, it will automatically trigger fund() function and we will receive money.
+    // This is useful if someone is given the contract address and he is paying from metamask send button directly instrad of calling the fund() function from the contract.
+    receive() external payable{
+        fund();
+    }
+    fallback() external payable{
+        fund();
     }
 
 }
