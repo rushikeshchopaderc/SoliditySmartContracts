@@ -11,7 +11,7 @@ import {AggregatorV3Interface} from "@chainlink/contracts@1.2.0/src/v0.8/shared/
 
 contract FundMe{
     uint256 public minPriceUSD= 5e18; // Getting 5 USD as minimum donation.
-    address public funders; //Creating a list of funders
+    address[] public funders; //Creating a list of funders
     mapping(address funder=>uint256 amountFunded) public funderToAmountMapping;// Get the mappkn of the sender to the amount sent.
     address public owner;
 
@@ -46,15 +46,16 @@ contract FundMe{
         uint256 amountUSD = (ethAmount * ethPrice)/1e18; 
         return amountUSD;
     }
-    function withdraw() public{
-        require(msg.sender==owner, " You are not the owner. Hence you can't withdraw the funds");
-        for (uint256 funderIndex=0; funderIndex<len(funders); funderIndex++){
+    function withdraw() public onlyOwner{
+        // require(msg.sender==owner, " You are not the owner. Hence you can't withdraw the funds");
+        // You can use the above line or you can use a modifier to do the same thing in case you want to avoid doing the same thing again and again.
+        for (uint256 funderIndex=0; funderIndex<funders.length; funderIndex++){
             address funder = funders[funderIndex];
             funderToAmountMapping[funder]=0; // resetting the value to 0
         }
 
         //Resetting the funds
-        funders= new address[][0];
+        funders= new address[](0);
         //Withdraw the funds. There are three ways to send money in solidity- transfer, send, call.
         // 1. Transfer - It automatically reverts if the transaction fails due to gas limit.
         // payable(msg.sender).transfer(address(this).balance);
@@ -66,6 +67,11 @@ contract FundMe{
         (bool success,bytes memory dataReturned)= payable(msg.sender).call{value: address(this).balance}("");
         require(success, "Sending Failed");
         
+    }
+
+    modifier onlyOwner{
+        require (msg.sender==owner, " You are not the owner. Hence you can't withdraw the funds");
+        _; // This line tells the calling function to go and execute the next lines of code.
     }
 
 }
